@@ -1,0 +1,162 @@
+[
+    {
+        "name": "Go",
+        "url": "https://github.com/golang/go",
+        "stars": 124000
+    },
+    {
+        "name": "TypeScript",
+        "url": "https://github.com/microsoft/TypeScript",
+        "stars": 101000
+    },
+    {
+        "name": "Rust",
+        "url": "https://github.com/rust-lang/rust",
+        "stars": 98000
+    },
+    {
+        "name": "Swift",
+        "url": "https://github.com/swiftlang/swift",
+        "stars": 67000
+    },
+    {
+        "name": "Python",
+        "url": "https://github.com/python/cpython",
+        "stars": 63000
+    },
+    {
+        "name": "Kotlin",
+        "url": "https://github.com/JetBrains/kotlin",
+        "stars": 49000
+    },
+    {
+        "name": "PowerShell",
+        "url": "https://github.com/PowerShell/PowerShell",
+        "stars": 45000
+    },
+    {
+        "name": "Julia",
+        "url": "https://github.com/JuliaLang/julia",
+        "stars": 45000
+    },
+    {
+        "name": "PHP",
+        "url": "https://github.com/php/php-src",
+        "stars": 38000
+    },
+    {
+        "name": "V",
+        "url": "https://github.com/vlang/v",
+        "stars": 35000
+    },
+    {
+        "name": "Zig",
+        "url": "https://github.com/ziglang/zig",
+        "stars": 34000
+    },
+    {
+        "name": "Carbon",
+        "url": "https://github.com/carbon-language/carbon-lang",
+        "stars": 32000
+    },
+    {
+        "name": "Elixir",
+        "url": "https://github.com/elixir-lang/elixir",
+        "stars": 24000
+    },
+    {
+        "name": "Ruby",
+        "url": "https://github.com/ruby/ruby",
+        "stars": 22000
+    },
+    {
+        "name": "Crystal",
+        "url": "https://github.com/crystal-lang/crystal",
+        "stars": 19000
+    },
+    {
+        "name": "JDK",
+        "url": "https://github.com/openjdk/jdk",
+        "stars": 19000
+    },
+    {
+        "name": "MicroPython",
+        "url": "https://github.com/micropython/micropython",
+        "stars": 19000
+    },
+    {
+        "name": "Roslyn",
+        "url": "https://github.com/dotnet/roslyn",
+        "stars": 19000
+    },
+    {
+        "name": "Gleam",
+        "url": "https://github.com/gleam-lang/gleam",
+        "stars": 17000
+    },
+    {
+        "name": "AssemblyScript",
+        "url": "https://github.com/AssemblyScript/assemblyscript",
+        "stars": 16000
+    },
+    {
+        "name": "Nim",
+        "url": "https://github.com/nim-lang/Nim",
+        "stars": 16000
+    },
+    {
+        "name": "CoffeeScript",
+        "url": "https://github.com/jashkenas/coffeescript",
+        "stars": 16000
+    },
+    {
+        "name": "DotNet",
+        "url": "https://github.com/dotnet/runtime",
+        "stars": 15000
+    },
+    {
+        "name": "Scala2",
+        "url": "https://github.com/scala/scala",
+        "stars": 14000
+    },
+    {
+        "name": "Erlang",
+        "url": "https://github.com/erlang/otp",
+        "stars": 11000
+    },
+    {
+        "name": "Clojure",
+        "url": "https://github.com/clojure/clojure",
+        "stars": 10000
+    },
+    {
+        "name": "Dart",
+        "url": "https://github.com/dart-lang/sdk",
+        "stars": 10000
+    },
+    {
+        "name": "Cython",
+        "url": "https://github.com/cython/cython",
+        "stars": 9000
+    },
+    {
+        "name": "Scala3",
+        "url": "https://github.com/scala/scala3",
+        "stars": 5000
+    },
+    {
+        "name": "OCaml",
+        "url": "https://github.com/ocaml/ocaml",
+        "stars": 5000
+    },
+    {
+        "name": "F#",
+        "url": "https://github.com/dotnet/fsharp",
+        "stars": 3000
+    },
+    {
+        "name": "Perl",
+        "url": "https://github.com/Perl/perl5",
+        "stars": 2000
+    }
+]
