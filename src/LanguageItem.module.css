@@ -1,0 +1,19 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s;
+}
+
+.item:hover {
+    background-color: #f9f9f9;
+}
+
+.rank,
+.name,
+.stars {
+    font-size: 1.2em;
+    margin: 0 10px;
+}
