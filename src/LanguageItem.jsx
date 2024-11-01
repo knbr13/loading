@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './LanguageItem.module.css';
 
 function LanguageItem({ rank, language }) {
-  const logoPath = `/logos/${language.name.toLowerCase()}.svg`; // Dynamically set logo path
+  const logoPath = `./logos/${language.name.toLowerCase()}.svg`;
 
   return (
     <div className={styles.item}>
