@@ -6,7 +6,7 @@ function App() {
   const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
-    fetch('/data.json')  // Fetching from the JSON file
+    fetch('./data.json')
       .then(response => response.json())
       .then(data => setLanguages(data));
   }, []);
