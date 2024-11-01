@@ -75,7 +75,7 @@
         "stars": 19000
     },
     {
-        "name": "JDK",
+        "name": "OpenJDK",
         "url": "https://github.com/openjdk/jdk",
         "stars": 19000
     },
@@ -150,7 +150,7 @@
         "stars": 5000
     },
     {
-        "name": "F#",
+        "name": "F-Sharp",
         "url": "https://github.com/dotnet/fsharp",
         "stars": 3000
     },
