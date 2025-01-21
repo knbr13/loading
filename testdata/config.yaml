@@ -1,0 +1,6 @@
+target_url: "http://localhost:8080"
+method: "GET"
+headers:
+  Content-Type: text/plain
+concurrency: 40
+request_count: 40
