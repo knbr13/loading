@@ -2,10 +2,11 @@ package loader
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/knbr13/loading/internal/reporter"
 )
 
 type RequestOptions struct {
@@ -19,6 +20,7 @@ type RequestOptions struct {
 func LoadTest(options RequestOptions) {
 	var wg sync.WaitGroup
 	ch := make(chan int, options.Concurrency)
+	metrics := &reporter.Metrics{}
 
 	for i := 0; i < options.RequestCount; i++ {
 		wg.Add(1)
@@ -31,6 +33,7 @@ func LoadTest(options RequestOptions) {
 			req, err := http.NewRequest(options.Method, options.URL, nil)
 			if err != nil {
 				fmt.Printf("Request %d failed to create: %v\n", requestID, err)
+				metrics.RecordError()
 				<-ch
 				return
 			}
@@ -40,13 +43,14 @@ func LoadTest(options RequestOptions) {
 			}
 
 			resp, err := http.DefaultClient.Do(req)
+			duration := time.Since(start)
 			if err != nil {
 				fmt.Printf("Request %d failed: %v\n", requestID, err)
+				metrics.RecordError()
 			} else {
-				body, _ := io.ReadAll(resp.Body)
-				fmt.Printf("Request %d completed in %v. Status: %s\n", requestID, time.Since(start), resp.Status)
+				fmt.Printf("Request %d completed in %v. Status: %s\n", requestID, duration, resp.Status)
+				metrics.RecordSuccess(duration)
 				resp.Body.Close()
-				_ = body
 			}
 
 			<-ch
@@ -54,5 +58,5 @@ func LoadTest(options RequestOptions) {
 	}
 
 	wg.Wait()
-	fmt.Println("load test completed!")
+	metrics.Report()
 }
