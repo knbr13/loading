@@ -48,7 +48,6 @@ func LoadTest(options RequestOptions) {
 				fmt.Printf("Request %d failed: %v\n", requestID, err)
 				metrics.RecordError()
 			} else {
-				fmt.Printf("Request %d completed in %v. Status: %s\n", requestID, duration, resp.Status)
 				metrics.RecordSuccess(duration)
 				resp.Body.Close()
 			}
