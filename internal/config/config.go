@@ -1,0 +1,32 @@
+package config
+
+import (
+	"fmt"
+	"os"
+
+	"gopkg.in/yaml.v3"
+)
+
+type Config struct {
+	TargetURL    string            `yaml:"target_url"`
+	Method       string            `yaml:"method"`
+	Headers      map[string]string `yaml:"headers"`
+	Concurrency  int               `yaml:"concurrency"`
+	RequestCount int               `yaml:"request_count"`
+}
+
+func LoadConfig(filePath string) (c Config, e error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return c, fmt.Errorf("failed to open config file: %w", err)
+	}
+	defer file.Close()
+
+	var cfg Config
+	decoder := yaml.NewDecoder(file)
+	if err := decoder.Decode(&cfg); err != nil {
+		return c, fmt.Errorf("failed to decode config: %w", err)
+	}
+
+	return cfg, nil
+}
