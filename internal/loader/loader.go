@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/knbr13/loading/internal/reporter"
+	"github.com/schollz/progressbar/v3"
 )
 
 type RequestOptions struct {
@@ -41,9 +42,14 @@ func LoadTest(options RequestOptions) {
 
 	metrics.Begin()
 
+	var pg *progressbar.ProgressBar
+
 	var l int = 1
 	if options.RequestCount != nil {
 		l = *options.RequestCount
+		pg = progressbar.New(l)
+	} else {
+		pg = progressbar.New(-1)
 	}
 
 	for i := 0; i < l; {
@@ -62,6 +68,7 @@ func LoadTest(options RequestOptions) {
 				fmt.Printf("Request %d failed to create: %v\n", requestID, err)
 				metrics.RecordError()
 				<-ch
+				pg.Add(1)
 				return
 			}
 
@@ -79,6 +86,7 @@ func LoadTest(options RequestOptions) {
 				resp.Body.Close()
 			}
 
+			pg.Add(1)
 			<-ch
 		}(i + 1)
 
