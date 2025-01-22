@@ -13,8 +13,9 @@ type RequestOptions struct {
 	Method       string
 	URL          string
 	Headers      map[string]string
-	Concurrency  int
-	RequestCount int
+	Concurrency  uint
+	RequestCount *int
+	Duration     *time.Duration
 }
 
 func LoadTest(options RequestOptions) {
@@ -25,9 +26,22 @@ func LoadTest(options RequestOptions) {
 		Timeout: 10 * time.Second,
 	}
 
+	deadline := time.Now()
+	if options.Duration != nil {
+		deadline = deadline.Add(*options.Duration)
+	}
+
 	metrics.Begin()
 
-	for i := 0; i < options.RequestCount; i++ {
+	var l int = 1
+	if options.RequestCount != nil {
+		l = *options.RequestCount
+	}
+
+	for i := 0; i < l; {
+		if options.Duration != nil && !time.Now().Before(deadline) {
+			break
+		}
 		wg.Add(1)
 		ch <- 1
 
@@ -59,6 +73,10 @@ func LoadTest(options RequestOptions) {
 
 			<-ch
 		}(i + 1)
+
+		if options.Duration == nil {
+			i++
+		}
 	}
 
 	wg.Wait()
