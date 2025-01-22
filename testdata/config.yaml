@@ -2,5 +2,10 @@ target_url: "http://localhost:8080"
 method: "GET"
 headers:
   Content-Type: text/plain
-concurrency: 40
-request_count: 40
+concurrency: 10
+http_timeout: 10s
+
+# use 'request_count' to specify the number of requests to be sent to the target_url
+# or use 'duration' to specify the duration in which the tool will be generating load
+# request_count: 1000 
+duration: 5000ms
