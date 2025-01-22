@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"gopkg.in/yaml.v3"
 )
@@ -11,8 +12,9 @@ type Config struct {
 	TargetURL    string            `yaml:"target_url"`
 	Method       string            `yaml:"method"`
 	Headers      map[string]string `yaml:"headers"`
-	Concurrency  int               `yaml:"concurrency"`
-	RequestCount int               `yaml:"request_count"`
+	Concurrency  uint              `yaml:"concurrency"`
+	RequestCount *uint             `yaml:"request_count"`
+	Duration     *time.Duration    `yaml:"duration"`
 }
 
 func LoadConfig(filePath string) (c Config, e error) {
