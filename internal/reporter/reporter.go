@@ -73,6 +73,7 @@ func (m *Metrics) Report() {
 	for _, v := range data {
 		table.Append(v)
 	}
+	fmt.Print("\n\n")
 	table.Render()
 
 	cyan := color.New(color.FgCyan).SprintFunc()
