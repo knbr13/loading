@@ -8,11 +8,21 @@ import (
 
 type Metrics struct {
 	mu            sync.Mutex
+	StartTime     time.Time
+	EndTime       time.Time
 	TotalRequests int
 	SuccessCount  int
 	ErrorCount    int
 	TotalDuration time.Duration
 	Latency       []time.Duration
+}
+
+func (m *Metrics) Begin() {
+	m.StartTime = time.Now()
+}
+
+func (m *Metrics) End() {
+	m.EndTime = time.Now()
 }
 
 func (m *Metrics) RecordSuccess(duration time.Duration) {
@@ -36,6 +46,9 @@ func (m *Metrics) Report() {
 	defer m.mu.Unlock()
 
 	avgLatency := m.TotalDuration / time.Duration(m.TotalRequests)
+	totalTime := m.EndTime.Sub(m.StartTime)
+	throughput := float64(m.TotalDuration) / totalTime.Seconds()
+
 	fmt.Println("\n--- Load Test Summary ---")
 	fmt.Printf("Total Requests: %d\n", m.TotalRequests)
 	fmt.Printf("Successful Requests: %d\n", m.SuccessCount)
@@ -44,6 +57,7 @@ func (m *Metrics) Report() {
 	if len(m.Latency) > 0 {
 		fmt.Printf("Max Latency: %v\n", maxLatency(m.Latency))
 	}
+	fmt.Printf("Throughput: %.2f requests/second\n", throughput)
 }
 
 func maxLatency(latencies []time.Duration) time.Duration {
