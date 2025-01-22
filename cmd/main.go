@@ -36,6 +36,7 @@ func main() {
 		Concurrency:  cfg.Concurrency,
 		Duration:     cfg.Duration,
 		RequestCount: i,
+		Timeout:      cfg.HTTPTimeout,
 	}
 
 	loader.LoadTest(options)

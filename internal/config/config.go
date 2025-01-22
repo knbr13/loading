@@ -15,6 +15,7 @@ type Config struct {
 	Concurrency  uint              `yaml:"concurrency"`
 	RequestCount *uint             `yaml:"request_count"`
 	Duration     *time.Duration    `yaml:"duration"`
+	HTTPTimeout  time.Duration     `yaml:"http_timeout"`
 }
 
 func LoadConfig(filePath string) (c Config, e error) {

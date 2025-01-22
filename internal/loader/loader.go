@@ -16,14 +16,22 @@ type RequestOptions struct {
 	Concurrency  uint
 	RequestCount *int
 	Duration     *time.Duration
+	Timeout      time.Duration
 }
+
+const (
+	defaultTimeout = 10 * time.Second
+)
 
 func LoadTest(options RequestOptions) {
 	var wg sync.WaitGroup
 	ch := make(chan int, options.Concurrency)
 	metrics := &reporter.Metrics{}
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: options.Timeout,
+	}
+	if options.Timeout == 0 {
+		client.Timeout = defaultTimeout
 	}
 
 	deadline := time.Now()
