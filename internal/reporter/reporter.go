@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sync"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 type Metrics struct {
@@ -45,19 +47,23 @@ func (m *Metrics) Report() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	avgLatency := m.TotalDuration / time.Duration(m.TotalRequests)
 	totalTime := m.EndTime.Sub(m.StartTime)
 	throughput := float64(m.TotalRequests) / totalTime.Seconds()
+	avgLatency := m.TotalDuration / time.Duration(m.TotalRequests)
+
+	green := color.New(color.FgGreen).SprintFunc()
+	red := color.New(color.FgRed).SprintFunc()
+	blue := color.New(color.FgBlue).SprintFunc()
 
 	fmt.Println("\n--- Load Test Summary ---")
-	fmt.Printf("Total Requests: %d\n", m.TotalRequests)
-	fmt.Printf("Successful Requests: %d\n", m.SuccessCount)
-	fmt.Printf("Failed Requests: %d\n", m.ErrorCount)
-	fmt.Printf("Average Latency: %v\n", avgLatency)
+	fmt.Printf("Total Requests: %s\n", blue(m.TotalRequests))
+	fmt.Printf("Successful Requests: %s\n", green(m.SuccessCount))
+	fmt.Printf("Failed Requests: %s\n", red(m.ErrorCount))
+	fmt.Printf("Average Latency: %s\n", blue(avgLatency))
 	if len(m.Latency) > 0 {
-		fmt.Printf("Max Latency: %v\n", maxLatency(m.Latency))
+		fmt.Printf("Max Latency: %s\n", blue(maxLatency(m.Latency)))
 	}
-	fmt.Printf("Throughput: %.2f req/sec\n", throughput)
+	fmt.Printf("Throughput: %s requests/second\n", blue(fmt.Sprintf("%.2f", throughput)))
 }
 
 func maxLatency(latencies []time.Duration) time.Duration {
