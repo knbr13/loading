@@ -47,7 +47,7 @@ func (m *Metrics) Report() {
 
 	avgLatency := m.TotalDuration / time.Duration(m.TotalRequests)
 	totalTime := m.EndTime.Sub(m.StartTime)
-	throughput := float64(m.TotalDuration) / totalTime.Seconds()
+	throughput := float64(m.TotalRequests) / totalTime.Seconds()
 
 	fmt.Println("\n--- Load Test Summary ---")
 	fmt.Printf("Total Requests: %d\n", m.TotalRequests)
@@ -57,7 +57,7 @@ func (m *Metrics) Report() {
 	if len(m.Latency) > 0 {
 		fmt.Printf("Max Latency: %v\n", maxLatency(m.Latency))
 	}
-	fmt.Printf("Throughput: %.2f requests/second\n", throughput)
+	fmt.Printf("Throughput: %.2f req/sec\n", throughput)
 }
 
 func maxLatency(latencies []time.Duration) time.Duration {
