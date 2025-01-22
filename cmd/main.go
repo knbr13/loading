@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/knbr13/loading/internal/config"
@@ -8,9 +9,12 @@ import (
 )
 
 func main() {
-	cfg, err := config.LoadConfig("testdata/config.yaml")
+	cfgFile := flag.String("c", "", "the .yaml configuration file")
+	flag.Parse()
+
+	cfg, err := config.LoadConfig(*cfgFile)
 	if err != nil {
-		log.Fatalf("Error loading config: %v", err)
+		log.Fatalf("error loading config: %v", err)
 	}
 
 	options := loader.RequestOptions{
