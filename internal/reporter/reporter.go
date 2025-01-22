@@ -2,8 +2,13 @@ package reporter
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"sync"
 	"time"
+
+	"github.com/fatih/color"
+	"github.com/olekukonko/tablewriter"
 )
 
 type Metrics struct {
@@ -45,19 +50,34 @@ func (m *Metrics) Report() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	avgLatency := m.TotalDuration / time.Duration(m.TotalRequests)
 	totalTime := m.EndTime.Sub(m.StartTime)
 	throughput := float64(m.TotalRequests) / totalTime.Seconds()
+	avgLatency := m.TotalDuration / time.Duration(m.TotalRequests)
 
-	fmt.Println("\n--- Load Test Summary ---")
-	fmt.Printf("Total Requests: %d\n", m.TotalRequests)
-	fmt.Printf("Successful Requests: %d\n", m.SuccessCount)
-	fmt.Printf("Failed Requests: %d\n", m.ErrorCount)
-	fmt.Printf("Average Latency: %v\n", avgLatency)
-	if len(m.Latency) > 0 {
-		fmt.Printf("Max Latency: %v\n", maxLatency(m.Latency))
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Metric", "Value"})
+	table.SetBorder(true)
+	table.SetRowLine(true)
+	table.SetCenterSeparator("*")
+	table.SetAlignment(tablewriter.ALIGN_CENTER)
+
+	data := [][]string{
+		{"Total Requests", strconv.Itoa(m.TotalRequests)},
+		{"Successful Requests", color.New(color.FgGreen).Sprint(m.SuccessCount)},
+		{"Failed Requests", color.New(color.FgRed).Sprint(m.ErrorCount)},
+		{"Average Latency", avgLatency.String()},
+		{"Max Latency", maxLatency(m.Latency).String()},
+		{"Throughput (req/sec)", strconv.FormatFloat(throughput, 'f', 2, 64)},
 	}
-	fmt.Printf("Throughput: %.2f req/sec\n", throughput)
+
+	for _, v := range data {
+		table.Append(v)
+	}
+	fmt.Print("\n\n")
+	table.Render()
+
+	cyan := color.New(color.FgCyan).SprintFunc()
+	fmt.Println(cyan("\nTest completed successfully! Analyze the results above.\n"))
 }
 
 func maxLatency(latencies []time.Duration) time.Duration {
