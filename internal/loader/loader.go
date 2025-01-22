@@ -47,7 +47,19 @@ func LoadTest(options RequestOptions) {
 	var l int = 1
 	if options.RequestCount != nil {
 		l = *options.RequestCount
-		pg = progressbar.New(l)
+		pg = progressbar.NewOptions(l,
+			progressbar.OptionSetDescription("Sending requests..."),
+			progressbar.OptionShowCount(),
+			progressbar.OptionShowIts(),
+			progressbar.OptionClearOnFinish(),
+			progressbar.OptionSetTheme(progressbar.Theme{
+				Saucer:        "=",
+				SaucerHead:    ">",
+				SaucerPadding: " ",
+				BarStart:      "[",
+				BarEnd:        "]",
+			}),
+		)
 	} else {
 		pg = progressbar.New(-1)
 	}
