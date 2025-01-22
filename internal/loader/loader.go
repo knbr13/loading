@@ -21,6 +21,11 @@ func LoadTest(options RequestOptions) {
 	var wg sync.WaitGroup
 	ch := make(chan int, options.Concurrency)
 	metrics := &reporter.Metrics{}
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	metrics.Begin()
 
 	for i := 0; i < options.RequestCount; i++ {
 		wg.Add(1)
@@ -42,7 +47,7 @@ func LoadTest(options RequestOptions) {
 				req.Header.Set(key, value)
 			}
 
-			resp, err := http.DefaultClient.Do(req)
+			resp, err := client.Do(req)
 			duration := time.Since(start)
 			if err != nil {
 				fmt.Printf("Request %d failed: %v\n", requestID, err)
@@ -57,5 +62,6 @@ func LoadTest(options RequestOptions) {
 	}
 
 	wg.Wait()
+	metrics.End()
 	metrics.Report()
 }
