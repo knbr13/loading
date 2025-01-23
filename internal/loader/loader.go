@@ -26,7 +26,7 @@ const (
 
 func LoadTest(options RequestOptions) {
 	var wg sync.WaitGroup
-	ch := make(chan int, options.Concurrency)
+	ch := make(chan struct{}, options.Concurrency)
 	metrics := &reporter.Metrics{}
 	client := &http.Client{
 		Timeout: options.Timeout,
@@ -69,7 +69,7 @@ func LoadTest(options RequestOptions) {
 			break
 		}
 		wg.Add(1)
-		ch <- 1
+		ch <- struct{}{}
 
 		go func(requestID int) {
 			defer wg.Done()
