@@ -1,4 +1,4 @@
-module github.com/knbr13/loading
+module github.com/aladdin-io/loading
 
 go 1.23.4
 
